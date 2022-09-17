@@ -1,0 +1,20 @@
+<powershell>
+# Turn off IE security
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A8-37EF-4b3f-8CFC-4F3A74704073}" -Name "IsInstalled" -Value 0
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\{A509B1A7-37EF-4b3f-8CFC-4F3A74704073}" -Name "IsInstalled" -Value 0
+
+# Environment Variables
+$desktopPath = [Environment]::GetFolderPath("Desktop")
+
+# Install software
+$chromeURL = "http://dl.google.com/chrome/chrome_installer.exe"
+$chromeInstaller = "/chrome_installer.exe"
+Invoke-WebRequest $chromeURL -OutFile $desktopPath$chromeInstaller
+Start-Process -FilePath $desktopPath$chromeInstaller -Args "/silent /install" -Verb RunAs -Wait
+
+# Install VMware SASE Root Certificate
+$certFile = "${cert_file}"
+$certFilePath = $desktopPath + "\vmware_sase_root.cer"
+$certFile | Out-File -FilePath $certFilePath
+Import-Certificate -FilePath $certFilePath -CertStoreLocation cert:\LocalMachine\Root
+</powershell>

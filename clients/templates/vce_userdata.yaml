@@ -1,0 +1,6 @@
+#cloud-config
+velocloud:
+ vce:
+  vco: ${vco_url}
+  activation_code: ${activation_code}
+  vco_ignore_cert_errors: true
