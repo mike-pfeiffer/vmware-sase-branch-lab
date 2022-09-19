@@ -21,7 +21,7 @@ data "aws_ami" "velocloud" {
 
   filter {
     name   = "name"
-    values = ["VeloCloud VCE*"]
+    values = ["VeloCloud VCE 4.3.1*GA*"]
   }
 }
 
