@@ -154,7 +154,7 @@ $ terraform apply
 
 <OUTPUT OMITTED FOR BREVITY>
 
-Apply complete! Resources: 25 added, 0 changed, 0 destroyed.
+Apply complete! Resources: 22 added, 0 changed, 0 destroyed.
 
 Outputs:
 
@@ -230,7 +230,7 @@ $ terraform destroy
 
 <OUTPUT OMITTED FOR BREVITY>
 
-Destroy complete! Resources: 25 destroyed.
+Destroy complete! Resources: 22 destroyed.
 ```
 
 That's it. All the components in AWS and Orchestrator have been removed.
