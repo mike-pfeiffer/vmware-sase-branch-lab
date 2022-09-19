@@ -16,8 +16,8 @@ module "aws-us-west-1" {
     aws       = aws.us-west-1
     velocloud = velocloud.sdwan
   }
-  
-  public_key = tls_private_key.keypair.public_key_openssh
+
+  public_key     = tls_private_key.keypair.public_key_openssh
   aws_access_key = var.aws_access_key
   aws_secret_key = var.aws_secret_key
   vco_url        = var.vco_url
