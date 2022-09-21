@@ -289,7 +289,8 @@ resource "aws_eip" "edge_wan1_eip" {
   network_interface = aws_network_interface.edge_wan1_eni.id
 
   depends_on = [
-    aws_network_interface.edge_wan1_eni
+    aws_network_interface.edge_wan1_eni,
+    aws_instance.sdwan_edge
   ]
 
   tags = {
@@ -301,7 +302,8 @@ resource "aws_eip" "windows_eip" {
   network_interface = aws_network_interface.windows_eni.id
 
   depends_on = [
-    aws_network_interface.windows_eni
+    aws_network_interface.windows_eni,
+    aws_instance.windows
   ]
 
   tags = {
