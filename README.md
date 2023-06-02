@@ -10,6 +10,7 @@ A disposable lab environment for testing VMware SD-WAN and Security functionalit
 - [Deploying the Lab](#deploying-the-lab)
 - [Testing with the Lab](#testing-with-the-lab)
 - [Destroying the Lab](#destroying-the-lab)
+- [Troubleshooting the Lab](#troubleshooting-the-lab)
 
 <a name="software-requirements"></a>
 
@@ -234,3 +235,56 @@ Destroy complete! Resources: 22 destroyed.
 ```
 
 That's it. All the components in AWS and Orchestrator have been removed.
+
+<a name="troubleshooting-the-lab"></a>
+
+## Troubleshooting the Lab
+
+### Terraform Error Validating Provider Credentials
+
+The following error occurs if your AWS account requires a session token for authenticating to the API. 
+
+```shell
+Error: error configuring Terraform AWS Provider: error validating provider credentials: error calling sts:GetCallerIdentity: operation error STS: GetCallerIdentity, https response error StatusCode: 403, RequestID: 5eca4251-99b7-4b42-aba4-79d54e73de4c, api error InvalidClientTokenId: The security token included in the request is invalid.
+│ 
+│   with provider["registry.terraform.io/hashicorp/aws"].us-west-1,
+│   on provider.tf line 1, in provider "aws":
+│    1: provider "aws" {
+```
+
+To resolve this issue, you will need to retrieve the session token from AWS. Once you have that make the modifications to the following files:
+
+> terraform.tfvars
+
+You can append the variable to the file.
+
+```shell
+aws_token="<AWS_TOKEN>"
+```
+
+>  vars.tf
+
+You can append the variable to the file.
+
+```shell
+variable "aws_token" {
+  type = string
+}
+```
+
+> provider.tf
+
+You need to include the **token** and variable reference in the AWS provider as shown below.
+
+```shell
+provider "aws" {
+  region     = "us-west-1"
+  alias      = "us-west-1"
+  access_key = var.aws_access_key
+  secret_key = var.aws_secret_key
+  token      = var.aws_token
+  default_tags {
+    tags = var.required_tags
+  }
+}
+```

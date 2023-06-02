@@ -32,3 +32,7 @@ variable "required_tags" {
     Environment = "vmware-sase-branch-lab"
   }
 }
+
+variable "aws_token" {
+  type = string
+}
